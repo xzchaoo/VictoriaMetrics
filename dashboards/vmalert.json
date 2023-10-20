@@ -1,38 +1,4 @@
 {
-  "__inputs": [],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "9.2.7"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -84,7 +50,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": null,
   "links": [
     {
       "asDropdown": false,
@@ -272,7 +237,7 @@
             "uid": "$ds"
           },
           "exemplar": false,
-          "expr": "count(vmalert_alerting_rules_error{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})",
+          "expr": "count(vmalert_alerting_rules_error_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -331,10 +296,12 @@
             "type": "prometheus",
             "uid": "$ds"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "count(vmalert_recording_rules_error{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})",
+          "expr": "count(vmalert_recording_rules_error_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})",
           "interval": "",
           "legendFormat": "",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -395,10 +362,12 @@
             "type": "prometheus",
             "uid": "$ds"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "(sum(vmalert_alerting_rules_error{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}) or vector(0)) + \n(sum(vmalert_recording_rules_error{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}) or vector(0))",
+          "expr": "(sum(increase(vmalert_alerting_rules_error_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})) or vector(0)) + \n(sum(increase(vmalert_recording_rules_error_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})) or vector(0))",
           "interval": "",
           "legendFormat": "",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1291,8 +1260,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1308,7 +1276,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 33
+            "y": 41
           },
           "id": 37,
           "links": [
@@ -1403,8 +1371,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1420,7 +1387,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 33
+            "y": 41
           },
           "id": 57,
           "links": [
@@ -1515,8 +1482,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1532,7 +1498,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 41
+            "y": 49
           },
           "id": 35,
           "links": [
@@ -1629,8 +1595,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1646,7 +1611,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 41
+            "y": 49
           },
           "id": 56,
           "links": [
@@ -1760,8 +1725,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1777,7 +1741,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 49
+            "y": 57
           },
           "id": 39,
           "links": [],
@@ -1866,8 +1830,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1883,7 +1846,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 49
+            "y": 57
           },
           "id": 41,
           "links": [],
@@ -1937,7 +1900,7 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": {
         "type": "datasource",
         "uid": "grafana"
@@ -1949,514 +1912,7 @@
         "y": 33
       },
       "id": 17,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$ds"
-          },
-          "description": "Shows top $topk current active (firing) alerting rules.\n\nThe panel uses MetricsQL functions and may not work with Prometheus.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 28
-          },
-          "id": 14,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "9.2.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "topk_max($topk, sum(vmalert_alerts_firing{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}) by(job, group, alertname) > 0)",
-              "interval": "",
-              "legendFormat": "{{group}}.{{alertname}} ({{job}})",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Top $topk active alerts ($group)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$ds"
-          },
-          "description": "Shows the events when rule execution resulted into an error. Check the logs for more details.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 28
-          },
-          "id": 13,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "9.2.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "sum(vmalert_alerting_rules_error{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}) by(job, group, alertname) > 0",
-              "interval": "",
-              "legendFormat": "{{group}}.{{alertname}} ({{job}})",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Errors ($group)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$ds"
-          },
-          "description": "Shows the current pending alerting rules per group.\nBy pending means the rule which remains active less than configured `for` parameter.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 36
-          },
-          "id": 20,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Mean",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "9.2.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "sum(vmalert_alerts_pending{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}) by(job, group, alertname) > 0",
-              "interval": "",
-              "legendFormat": "{{group}}.{{alertname}} ({{job}})",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Pending ($group)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$ds"
-          },
-          "description": "Shows the error rate for the attempts to send alerts to Alertmanager. If not zero it means there issues on attempt to send notification to Alertmanager and some alerts may be not delivered properly. Check the logs for more details.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 36
-          },
-          "id": 32,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "9.2.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$ds"
-              },
-              "exemplar": false,
-              "expr": "sum(rate(vmalert_alerts_send_errors_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}[$__rate_interval])) by(instance, addr) > 0",
-              "interval": "",
-              "legendFormat": "{{instance}} => {{addr}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Errors rate to Alertmanager ($group)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "$ds"
-          },
-          "description": "Shows how many alerts are sent to Alertmanager per second. Only active alerts are sent.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 44
-          },
-          "id": 26,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "lastNotNull",
-                "max"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "9.2.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "$ds"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "sum(rate(vmalert_alerts_sent_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])) by(job, addr) > 0",
-              "interval": "",
-              "legendFormat": "{{job}} => {{addr}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Requests rate to Alertmanager by job ($group)",
-          "type": "timeseries"
-        }
-      ],
+      "panels": [],
       "targets": [
         {
           "datasource": {
@@ -2470,6 +1926,632 @@
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$ds"
+      },
+      "description": "Shows top $topk current active (firing) alerting rules.\n\nThe panel uses MetricsQL functions and may not work with Prometheus.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 34
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "topk_max($topk, sum(vmalert_alerts_firing{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}) by(job, group, alertname) > 0)",
+          "interval": "",
+          "legendFormat": "{{group}}.{{alertname}} ({{job}})",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Top $topk active alerts ($group)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$ds"
+      },
+      "description": "Shows the events when rule execution resulted into an error. Check the logs for more details.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "title": "Drilldown",
+              "url": "/d/LzldHAVnz?viewPanel=58&var-job=${__field.labels.job}&var-ds=$ds&var-instance=$instance&${__url_time_range}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(vmalert_alerting_rules_error_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})) by(job, group, alertname) > 0",
+          "interval": "",
+          "legendFormat": "{{group}}.{{alertname}} ({{job}})",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Errors alerting rules ($group)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$ds"
+      },
+      "description": "Shows the current pending alerting rules per group.\nBy pending means the rule which remains active less than configured `for` parameter.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 42
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(vmalert_alerts_pending{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}) by(job, group, alertname) > 0",
+          "interval": "",
+          "legendFormat": "{{group}}.{{alertname}} ({{job}})",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Pending ($group)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$ds"
+      },
+      "description": "Shows the events when rule execution resulted into an error. Check the logs for more details.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "title": "Drilldown",
+              "url": "/d/LzldHAVnz?viewPanel=62&var-job=${__field.labels.job}&var-ds=$ds&var-instance=$instance&${__url_time_range}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 42
+      },
+      "id": 61,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(vmalert_recording_rules_error_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})) by(job, group, alertname) > 0",
+          "interval": "",
+          "legendFormat": "{{group}}.{{alertname}} ({{job}})",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Errors recording rules ($group)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$ds"
+      },
+      "description": "Shows how many alerts are sent to Alertmanager per second. Only active alerts are sent.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 50
+      },
+      "id": 26,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(rate(vmalert_alerts_sent_total{job=~\"$job\", instance=~\"$instance\"}[$__rate_interval])) by(job, addr) > 0",
+          "interval": "",
+          "legendFormat": "{{job}} => {{addr}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Requests rate to Alertmanager by job ($group)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$ds"
+      },
+      "description": "Shows the error rate for the attempts to send alerts to Alertmanager. If not zero it means there issues on attempt to send notification to Alertmanager and some alerts may be not delivered properly. Check the logs for more details.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 50
+      },
+      "id": 32,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "9.2.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$ds"
+          },
+          "exemplar": false,
+          "expr": "sum(rate(vmalert_alerts_send_errors_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"}[$__rate_interval])) by(instance, addr) > 0",
+          "interval": "",
+          "legendFormat": "{{instance}} => {{addr}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Errors rate to Alertmanager ($group)",
+      "type": "timeseries"
+    },
+    {
       "collapsed": true,
       "datasource": {
         "type": "datasource",
@@ -2479,7 +2561,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 58
       },
       "id": 28,
       "panels": [
@@ -2545,7 +2627,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 43
+            "y": 51
           },
           "id": 31,
           "options": {
@@ -2647,7 +2729,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 43
+            "y": 51
           },
           "id": 33,
           "options": {
@@ -2748,7 +2830,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 51
+            "y": 59
           },
           "id": 30,
           "options": {
@@ -2805,7 +2887,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 59
       },
       "id": 55,
       "panels": [
@@ -2869,7 +2951,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 9
+            "y": 68
           },
           "id": 52,
           "options": {
@@ -2961,7 +3043,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 9
+            "y": 68
           },
           "id": 53,
           "options": {
@@ -2995,6 +3077,191 @@
       ],
       "title": "Remote write",
       "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 60
+      },
+      "id": 60,
+      "panels": [],
+      "title": "Drilldown",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$ds"
+      },
+      "description": "Shows the events when rule execution resulted into an error. Check the logs for more details.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 61
+      },
+      "id": 58,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.2.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(vmalert_alerting_rules_error_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})) by(job, group, alertname) > 0",
+          "format": "table",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{group}}.{{alertname}} ({{job}})",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Errors alerting rules ($group)",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Time"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$ds"
+      },
+      "description": "Shows the events when rule execution resulted into an error. Check the logs for more details.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 61
+      },
+      "id": 62,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.2.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$ds"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(vmalert_recording_rules_error_total{job=~\"$job\", instance=~\"$instance\", group=~\"$group\"})) by(job, group, alertname) > 0",
+          "format": "table",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{group}}.{{alertname}} ({{job}})",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Errors recording rules ($group)",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Time"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
     }
   ],
   "refresh": false,
@@ -3009,8 +3276,8 @@
       {
         "current": {
           "selected": false,
-          "text": "VictoriaMetrics - cluster",
-          "value": "VictoriaMetrics - cluster"
+          "text": "VictoriaMetrics",
+          "value": "VictoriaMetrics"
         },
         "hide": 0,
         "includeAll": false,
@@ -3025,7 +3292,15 @@
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": [
+            "vmalert"
+          ],
+          "value": [
+            "vmalert"
+          ]
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "$ds"
@@ -3048,7 +3323,15 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "$ds"
@@ -3071,7 +3354,11 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "$ds"
@@ -3153,13 +3440,13 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "VictoriaMetrics - vmalert",
   "uid": "LzldHAVnz",
-  "version": 1,
+  "version": 4,
   "weekStart": ""
 }
