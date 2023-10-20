@@ -13,6 +13,7 @@ import (
 	"github.com/VictoriaMetrics/VictoriaMetrics/app/vmalert/config"
 	"github.com/VictoriaMetrics/VictoriaMetrics/app/vmalert/datasource"
 	"github.com/VictoriaMetrics/VictoriaMetrics/app/vmalert/notifier"
+	"github.com/VictoriaMetrics/VictoriaMetrics/app/vmalert/utils"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/prompbmarshal"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/promutils"
 )
@@ -676,6 +677,9 @@ func TestAlertingRule_Exec_Negative(t *testing.T) {
 	ar := newTestAlertingRule("test", 0)
 	ar.Labels = map[string]string{"job": "test"}
 	ar.q = fq
+	ar.metrics = &alertingRuleMetrics{
+		errors: utils.GetOrCreateCounter("test_counter_metric_total"),
+	}
 
 	// successful attempt
 	fq.Add(metricWithValueAndLabels(t, 1, "__name__", "foo", "job", "bar"))
@@ -710,6 +714,9 @@ func TestAlertingRuleLimit(t *testing.T) {
 	ar.Labels = map[string]string{"job": "test"}
 	ar.q = fq
 	ar.For = time.Minute
+	ar.metrics = &alertingRuleMetrics{
+		errors: utils.GetOrCreateCounter("test_counter_metric_total"),
+	}
 	testCases := []struct {
 		limit  int
 		err    string
