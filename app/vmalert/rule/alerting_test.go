@@ -641,6 +641,9 @@ func TestGroup_Restore(t *testing.T) {
 			if got.ActiveAt != exp.ActiveAt {
 				t.Fatalf("expected ActiveAt %v; got %v", exp.ActiveAt, got.ActiveAt)
 			}
+			if got.Name != exp.Name {
+				t.Fatalf("expected alertname %q; got %q", exp.Name, got.Name)
+			}
 		}
 	}
 
@@ -656,6 +659,7 @@ func TestGroup_Restore(t *testing.T) {
 		[]config.Rule{{Alert: "foo", Expr: "foo", For: promutils.NewDuration(time.Second)}},
 		map[uint64]*notifier.Alert{
 			hash(map[string]string{alertNameLabel: "foo", alertGroupNameLabel: "TestRestore"}): {
+				Name:     "foo",
 				ActiveAt: defaultTS,
 			},
 		})
@@ -669,6 +673,7 @@ func TestGroup_Restore(t *testing.T) {
 		[]config.Rule{{Alert: "foo", Expr: "foo", For: promutils.NewDuration(time.Second)}},
 		map[uint64]*notifier.Alert{
 			hash(map[string]string{alertNameLabel: "foo", alertGroupNameLabel: "TestRestore"}): {
+				Name:     "foo",
 				ActiveAt: ts,
 			},
 		})
@@ -676,7 +681,7 @@ func TestGroup_Restore(t *testing.T) {
 	// two rules, two active alerts, one with state restored
 	ts = time.Now().Truncate(time.Hour)
 	fqr.Set(`last_over_time(ALERTS_FOR_STATE{alertgroup="TestRestore",alertname="bar"}[3600s])`,
-		stateMetric("foo", ts))
+		stateMetric("bar", ts))
 	fn(
 		[]config.Rule{
 			{Alert: "foo", Expr: "foo", For: promutils.NewDuration(time.Second)},
@@ -684,9 +689,11 @@ func TestGroup_Restore(t *testing.T) {
 		},
 		map[uint64]*notifier.Alert{
 			hash(map[string]string{alertNameLabel: "foo", alertGroupNameLabel: "TestRestore"}): {
+				Name:     "foo",
 				ActiveAt: defaultTS,
 			},
 			hash(map[string]string{alertNameLabel: "bar", alertGroupNameLabel: "TestRestore"}): {
+				Name:     "bar",
 				ActiveAt: ts,
 			},
 		})
@@ -704,9 +711,11 @@ func TestGroup_Restore(t *testing.T) {
 		},
 		map[uint64]*notifier.Alert{
 			hash(map[string]string{alertNameLabel: "foo", alertGroupNameLabel: "TestRestore"}): {
+				Name:     "foo",
 				ActiveAt: ts,
 			},
 			hash(map[string]string{alertNameLabel: "bar", alertGroupNameLabel: "TestRestore"}): {
+				Name:     "bar",
 				ActiveAt: ts,
 			},
 		})
@@ -719,6 +728,7 @@ func TestGroup_Restore(t *testing.T) {
 		[]config.Rule{{Alert: "foo", Expr: "foo", For: promutils.NewDuration(time.Second)}},
 		map[uint64]*notifier.Alert{
 			hash(map[string]string{alertNameLabel: "foo", alertGroupNameLabel: "TestRestore"}): {
+				Name:     "foo",
 				ActiveAt: defaultTS,
 			},
 		})
@@ -731,6 +741,7 @@ func TestGroup_Restore(t *testing.T) {
 		[]config.Rule{{Alert: "foo", Expr: "foo", Labels: map[string]string{"env": "dev"}, For: promutils.NewDuration(time.Second)}},
 		map[uint64]*notifier.Alert{
 			hash(map[string]string{alertNameLabel: "foo", alertGroupNameLabel: "TestRestore", "env": "dev"}): {
+				Name:     "foo",
 				ActiveAt: ts,
 			},
 		})
@@ -743,6 +754,7 @@ func TestGroup_Restore(t *testing.T) {
 		[]config.Rule{{Alert: "foo", Expr: "foo", Labels: map[string]string{"env": "dev"}, For: promutils.NewDuration(time.Second)}},
 		map[uint64]*notifier.Alert{
 			hash(map[string]string{alertNameLabel: "foo", alertGroupNameLabel: "TestRestore", "env": "dev"}): {
+				Name:     "foo",
 				ActiveAt: defaultTS,
 			},
 		})
