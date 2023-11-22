@@ -118,6 +118,7 @@ func NewAlertingRule(qb datasource.QuerierBuilder, group *Group, cfg config.Rule
 			}
 			return float64(num)
 		})
+	// this is deprecated metric use rr.metrics.errors instead
 	ar.metrics.errorsGauge = utils.GetOrCreateGauge(fmt.Sprintf(`vmalert_alerting_rules_error{%s}`, labels),
 		func() float64 {
 			e := ar.state.getLast()
