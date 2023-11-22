@@ -68,7 +68,6 @@ services:
       - ./alerts-health.yml:/etc/alerts/alerts-health.yml
       - ./alerts-vmagent.yml:/etc/alerts/alerts-vmagent.yml
       - ./alerts-vmalert.yml:/etc/alerts/alerts-vmalert.yml
-      - ./slo-rules.yml:/etc/alerts/slo-rules.yml
     command:
       - "--datasource.url=http://victoriametrics:8428/"
       - "--remoteRead.url=http://victoriametrics:8428/"

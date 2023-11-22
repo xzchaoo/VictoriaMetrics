@@ -4,7 +4,6 @@
 # and threshold calibration according to every specific setup.
 groups:
   - name: vm-health
-    interval: 10s
     # note the `job` filter and update accordingly to your setup
     rules:
       - alert: TooManyRestarts
